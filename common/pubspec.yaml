@@ -8,3 +8,4 @@ environment:
 dependencies:
   get_it: ^5.0.4
   injectable: ^1.0.7
+  socket_io: ^0.9.4

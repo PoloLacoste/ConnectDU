@@ -1,1 +1,1 @@
-database: postgres://postgres:password@localhost:5432/connect_du
+database: ${DATABASE_URL}
