@@ -4,6 +4,10 @@ class ServerChannel extends ApplicationChannel {
   ManagedContext context;
   AppConfiguration config;
 
+  static Future initializeApplication(ApplicationOptions options) async {
+    
+  }
+
   @override
   Future prepare() async {
     config = AppConfiguration(options.configurationFilePath);
@@ -31,9 +35,6 @@ class ServerChannel extends ApplicationChannel {
 
     router.route("/login")
     .link(() => LoginController(context));
-
-    router.route("/collect/[:username]")
-    .link(() => CollectController());
 
     return router;
   }
