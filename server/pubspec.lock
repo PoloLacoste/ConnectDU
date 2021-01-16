@@ -43,6 +43,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  buffer:
+    dependency: transitive
+    description:
+      name: buffer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.7"
   charcode:
     dependency: transitive
     description:
@@ -64,6 +71,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.13"
+  common:
+    dependency: "direct main"
+    description:
+      path: "../common"
+      relative: true
+    source: path
+    version: "0.0.1"
   convert:
     dependency: transitive
     description:
@@ -72,7 +86,7 @@ packages:
     source: hosted
     version: "2.1.1"
   crypto:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: crypto
       url: "https://pub.dartlang.org"
@@ -92,6 +106,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.14"
+  get_it:
+    dependency: transitive
+    description:
+      name: get_it
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.4"
   glob:
     dependency: transitive
     description:
@@ -120,6 +141,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.4"
+  injectable:
+    dependency: transitive
+    description:
+      name: injectable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.7"
   intl:
     dependency: transitive
     description:
@@ -268,12 +296,12 @@ packages:
     source: hosted
     version: "1.4.0"
   postgres:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: postgres
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "2.2.0"
   pub_cache:
     dependency: transitive
     description:
