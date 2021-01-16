@@ -6,4 +6,5 @@ author: PoloLacoste
 environment:
   sdk: '>=2.7.0 <3.0.0'
 dependencies:
-  
+  get_it: ^5.0.4
+  injectable: ^1.0.7
