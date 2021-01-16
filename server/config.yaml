@@ -1,1 +1,2 @@
 database: ${DATABASE_URL}
+socketIoPort: ${SOCKET_IO_PORT}
