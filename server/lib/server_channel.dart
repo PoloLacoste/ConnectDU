@@ -5,12 +5,18 @@ class ServerChannel extends ApplicationChannel {
   AppConfiguration config;
 
   static Future initializeApplication(ApplicationOptions options) async {
-    
+    configureDependencies();
+
+    final config = AppConfiguration(options.configurationFilePath);
+    final socketIoServer = SocketIoServer(config.socketIoPort);
+
+    locator.registerSingleton<AppConfiguration>(config);
+    locator.registerSingleton<SocketIoServer>(socketIoServer);
   }
 
   @override
   Future prepare() async {
-    config = AppConfiguration(options.configurationFilePath);
+    config = locator<AppConfiguration>();
 
     final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
     final psc = PostgreSQLPersistentStore.fromConnectionInfo(

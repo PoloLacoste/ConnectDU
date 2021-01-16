@@ -6,4 +6,7 @@ import 'locator.config.dart';
 final locator = GetIt.instance;
 
 @InjectableInit()
-void configureDependencies() => $initGetIt(locator);
+void configureDependencies() {
+  $initGetIt(locator);
+  locator.allReadySync();
+}
