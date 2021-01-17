@@ -14,8 +14,16 @@ class TokenController extends Controller
       return Response.unauthorized();
     }
 
-    final token = bearerParser.parse(authorizationHeader);
-    if(token == null) {
+    String token;
+
+    try {
+      token = bearerParser.parse(authorizationHeader);
+    }
+    catch(e) {
+      return Response.unauthorized();
+    }
+
+    if(token == null || token.isEmpty) {
       return Response.unauthorized();
     }
 

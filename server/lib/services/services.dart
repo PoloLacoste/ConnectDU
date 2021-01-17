@@ -1,0 +1,1 @@
+export 'collect_service.dart';
