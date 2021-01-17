@@ -2,6 +2,7 @@ library server;
 
 export 'dart:async';
 export 'dart:convert';
+export 'dart:io';
 
 export 'package:aqueduct/aqueduct.dart';
 export 'package:crypto/crypto.dart';
