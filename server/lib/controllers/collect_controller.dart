@@ -11,13 +11,15 @@ class CollectController extends ResourceController
 	{
     final socket = await WebSocketTransformer.upgrade(request.raw);
 
+    final username = request.authorization.clientID;
+
     socket.listen((data) {
 
     }, onDone: () async {
-      print("Socket done");
+      print("Socket done $username");
       await socket.close();
     }, onError: (e) async {
-      print("Socket error $e");
+      print("Socket error $username : $e");
       await socket.close();
     });
 

@@ -11,6 +11,7 @@ dependencies:
   common:
     path: ../common
   crypto: ^2.1.5
+  dart_jsonwebtoken: ^1.5.1
 
 dev_dependencies:
   test: ^1.0.0

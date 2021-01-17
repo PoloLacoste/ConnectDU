@@ -18,8 +18,8 @@ class RegisterController extends ResourceController
 		..values.username = body.username
 		..values.password = hashedPassword;
 
-		final user = await query.insert();
+		await query.insert();
 
-		return Response.ok(user);
+		return Response.ok("");
 	}
 }
