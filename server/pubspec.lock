@@ -106,13 +106,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.14"
-  get_it:
-    dependency: transitive
-    description:
-      name: get_it
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.0.4"
   glob:
     dependency: transitive
     description:
@@ -141,13 +134,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.4"
-  injectable:
-    dependency: transitive
-    description:
-      name: injectable
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.7"
   intl:
     dependency: transitive
     description:
@@ -316,13 +302,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.4"
-  rikulo_commons:
-    dependency: transitive
-    description:
-      name: rikulo_commons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.3.0"
   safe_config:
     dependency: transitive
     description:
@@ -358,20 +337,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.3"
-  socket_io:
-    dependency: transitive
-    description:
-      name: socket_io
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.9.4"
-  socket_io_common:
-    dependency: transitive
-    description:
-      name: socket_io_common
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.9.2"
   source_map_stack_trace:
     dependency: transitive
     description:
@@ -400,13 +365,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.9.6"
-  stream:
-    dependency: transitive
-    description:
-      name: stream
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.6.0"
   stream_channel:
     dependency: transitive
     description:
@@ -456,13 +414,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
-  uuid:
-    dependency: transitive
-    description:
-      name: uuid
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.2.2"
   vm_service_client:
     dependency: transitive
     description:
