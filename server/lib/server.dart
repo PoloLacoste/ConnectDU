@@ -12,4 +12,3 @@ export 'controllers/controllers.dart';
 export 'entities/entities.dart';
 export 'models/models.dart';
 export 'server_channel.dart';
-export 'socket_io_server.dart';
