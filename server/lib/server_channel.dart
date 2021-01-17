@@ -30,9 +30,10 @@ class ServerChannel extends ApplicationChannel {
     .link(() => RegisterController(context));
 
     router.route("/login")
-    .link(() => LoginController(context));
+    .link(() => LoginController(context, config.secret));
 
     router.route("/collect")
+    .link(() => TokenController(config.secret))
     .link(() => CollectController(context));
 
     return router;

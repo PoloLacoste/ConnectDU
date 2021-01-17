@@ -7,4 +7,5 @@ class AppConfiguration extends Configuration {
 
   DatabaseConfiguration database;
   int socketIoPort;
+  String secret;
 }

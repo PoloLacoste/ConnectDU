@@ -2,9 +2,10 @@ import 'package:server/server.dart';
 
 class LoginController extends ResourceController
 {
-  LoginController(this.context);
+  LoginController(this.context, this.secret);
 	
   final ManagedContext context;
+  final String secret;
 
 	@Operation.post()
 	Future<Response> login(@Bind.body(
@@ -24,6 +25,17 @@ class LoginController extends ResourceController
       return Response.badRequest(body: "Invalid username or password");
     }
 
-    return Response.ok({});
+    final jwt = JWT({
+      'username': body.username
+    });
+
+    final token = jwt.sign(
+      SecretKey(secret),
+      expiresIn: const Duration(days: 1)
+    );
+
+    return Response.ok({
+      'token': token
+    });
 	}
 }

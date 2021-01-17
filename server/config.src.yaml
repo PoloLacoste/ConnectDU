@@ -1,2 +1,3 @@
 database: postgres://postgres:password@localhost:5432/connect_du
 socketIoPort: 3000
+secret: secret
