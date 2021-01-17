@@ -6,10 +6,5 @@ author: PoloLacoste
 environment:
   sdk: '>=2.7.0 <3.0.0'
 dependencies:
-  get_it: ^5.0.4
-  injectable: ^1.0.7
-  socket_io: ^0.9.4
 
 dev_dependencies:
-  injectable_generator: ^1.0.7
-  build_runner: ^1.10.13
