@@ -32,6 +32,9 @@ class ServerChannel extends ApplicationChannel {
     router.route("/login")
     .link(() => LoginController(context));
 
+    router.route("/collect")
+    .link(() => CollectController(context));
+
     return router;
   }
 }
