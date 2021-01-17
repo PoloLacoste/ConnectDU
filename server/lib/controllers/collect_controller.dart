@@ -2,26 +2,17 @@ import 'package:server/server.dart';
 
 class CollectController extends ResourceController
 {
-  CollectController(this.context);
-	
-  final ManagedContext context;
+  CollectController(this.collectService);
+
+  final CollectService collectService;
 
 	@Operation.get()
 	Future<Response> collect() async
 	{
     final socket = await WebSocketTransformer.upgrade(request.raw);
-
     final username = request.authorization.clientID;
 
-    socket.listen((data) {
-
-    }, onDone: () async {
-      print("Socket done $username");
-      await socket.close();
-    }, onError: (e) async {
-      print("Socket error $username : $e");
-      await socket.close();
-    });
+    collectService.add(username, socket);
 
     return null;
 	}

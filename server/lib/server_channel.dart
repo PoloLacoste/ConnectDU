@@ -3,6 +3,7 @@ import 'server.dart';
 class ServerChannel extends ApplicationChannel {
   ManagedContext context;
   AppConfiguration config;
+  CollectService collectService;
 
   @override
   Future prepare() async {
@@ -19,6 +20,16 @@ class ServerChannel extends ApplicationChannel {
 
     context = ManagedContext(dataModel, psc);
 
+    collectService = CollectService(messageHub);
+
+    messageHub.listen((data) {
+      collectService.broadcast(data);
+    }, onDone: () {
+      print("Message hub done");
+    }, onError: (e) {
+      print("Message hub error : $e");
+    });
+
     logger.onRecord.listen((rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
   }
 
@@ -34,7 +45,7 @@ class ServerChannel extends ApplicationChannel {
 
     router.route("/collect")
     .link(() => TokenController(config.secret))
-    .link(() => CollectController(context));
+    .link(() => CollectController(collectService));
 
     return router;
   }
