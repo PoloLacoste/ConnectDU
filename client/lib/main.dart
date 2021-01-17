@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:client/screens/home_screen.dart';
-
-void main() {
+import 'package:client/screens/login_screen.dart';
+import 'package:client/app/locator.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
   runApp(App());
 }
 
@@ -14,7 +16,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'ConnectDU',
       theme: ThemeData(),
-      home: HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }
