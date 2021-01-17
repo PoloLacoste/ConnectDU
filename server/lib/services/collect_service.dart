@@ -26,10 +26,8 @@ class CollectService {
   }
 
   void _onData(WebSocket webSocket, String username, dynamic data) {
-    final event = jsonEncode({
-      "username": username,
-      "data": jsonDecode(data as String)
-    });
+    final jason = jsonDecode(data as String) as Map<String, dynamic>;
+    final event = Event.fromJson(jason);
 
     messageHub.add(event);
     broadcast(event, fromUsername: username);
@@ -46,10 +44,10 @@ class CollectService {
     _onDone(username);
   }
 
-  void broadcast(dynamic event, {String fromUsername}) {
+  void broadcast(Event event, {String fromUsername}) {
     webSockets.forEach((username, socket) {
       if(username != fromUsername) {
-        socket.add(event);
+        socket.add(jsonEncode(event.toJson()));
       }
     });
   }
