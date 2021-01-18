@@ -1,17 +1,27 @@
-FROM google/dart
+FROM google/dart:2.8.4 as builder
+
+WORKDIR /aqueduct
+ADD ./aqueduct /aqueduct
+WORKDIR /aqueduct/aqueduct
+RUN pub get
+RUN pub global activate --source path .
 
 WORKDIR /common
-ADD ./common/pubspec.* /common/
-RUN pub get --no-precompile
 ADD ./common /common/
-RUN pub get --offline --no-precompile
+RUN pub get
 
 WORKDIR /app
-ADD ./server/pubspec.* /app/
-RUN pub get --no-precompile
 ADD ./server /app/
-RUN pub get --offline --no-precompile
+RUN pub get
+
+RUN pub run aqueduct build
+
+FROM debian as production
+
+WORKDIR /usr/src/app
+
+COPY --from=builder /app ./
 
 EXPOSE 80
 
-ENTRYPOINT pub run aqueduct db upgrade --connect $DATABASE_URL && pub run aqueduct serve --port 80
+ENTRYPOINT ["./test_server.aot"]
