@@ -1,0 +1,25 @@
+version: '2.1'
+services:
+
+  postgres:
+    container_name: postgres
+    restart: always
+    image: postgres:13-alpine
+    environment: 
+      - POSTGRES_PASSWORD=password
+    ports: 
+      - 5432:5432
+  
+  connect_du:
+    build: 
+      context: ./
+      dockerfile: ./Dockerfile
+    restart: always
+    container_name: connect_du
+    environment: 
+      - DATABASE_URL=postgres://postgres:password@postgres:5432/connect_du
+      - SECRET=secret
+    ports: 
+      - 80:80
+    depends_on: 
+      - postgres
