@@ -26,7 +26,6 @@ class ServerChannel extends ApplicationChannel {
       final event = data as Event;
       collectService.broadcast(event);
     }, onDone: () {
-      print("Message hub done");
     }, onError: (e) {
       print("Message hub error : $e");
     });
