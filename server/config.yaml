@@ -1,2 +1,2 @@
-database: ${DATABASE_URL}
-secret: ${SECRET}
+database: $DATABASE_URL
+secret: $SECRET
