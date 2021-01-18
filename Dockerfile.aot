@@ -1,0 +1,27 @@
+FROM google/dart:2.10.2 as builder
+
+WORKDIR /aqueduct
+ADD ./aqueduct /aqueduct
+WORKDIR /aqueduct/aqueduct
+RUN pub get
+RUN pub global activate --source path .
+
+WORKDIR /common
+ADD ./common /common/
+RUN pub get
+
+WORKDIR /app
+ADD ./server /app/
+RUN pub get
+
+RUN pub run aqueduct build
+
+FROM debian as production
+
+WORKDIR /usr/src/app
+
+COPY --from=builder /app ./
+
+EXPOSE 80
+
+ENTRYPOINT ["./server.aot"]
