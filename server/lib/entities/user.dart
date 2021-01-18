@@ -10,4 +10,14 @@ class _User {
   String username;
 
   String password;
+
+  bool collected;
+
+  int collectDate;
+
+  Event toEvent() => Event(
+    username: username,
+    collected: collected,
+    collectDate: collectDate
+  );
 }

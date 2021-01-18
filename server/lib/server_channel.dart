@@ -20,7 +20,7 @@ class ServerChannel extends ApplicationChannel {
 
     context = ManagedContext(dataModel, psc);
 
-    collectService = CollectService(messageHub);
+    collectService = CollectService(messageHub, context);
 
     messageHub.listen((data) {
       final event = data as Event;
