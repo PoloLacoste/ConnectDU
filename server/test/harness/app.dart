@@ -19,10 +19,10 @@ export 'package:aqueduct/aqueduct.dart';
 ///           });
 ///         }
 ///
-class Harness extends TestHarness<ServerChannel> {
+class Harness extends TestHarness<ServerChannel>{
+
   @override
   Future onSetUp() async {
-
   }
 
   @override
