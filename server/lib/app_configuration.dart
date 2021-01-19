@@ -7,4 +7,5 @@ class AppConfiguration extends Configuration {
 
   DatabaseConfiguration database;
   String secret;
+  bool register;
 }

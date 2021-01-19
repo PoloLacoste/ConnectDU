@@ -1,2 +1,3 @@
 database: $DATABASE_URL
 secret: $SECRET
+register: false
