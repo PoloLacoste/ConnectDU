@@ -37,8 +37,11 @@ class ServerChannel extends ApplicationChannel {
   Controller get entryPoint {
     final router = Router();
 
-    router.route("/register")
-    .link(() => RegisterController(context));
+    if(config.register) {
+      router.route("/register")
+      .link(() => RegisterController(context));
+    }
+
 
     router.route("/login")
     .link(() => LoginController(context, config.secret));
