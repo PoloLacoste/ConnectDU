@@ -18,7 +18,7 @@ class CollectService {
   WebSocket _webSocket;
 
   Future<void> collect() async {
-    _webSocket = await WebSocket.connect("ws://$serverIp/collect", headers: {
+    _webSocket = await WebSocket.connect("wss://$serverIp/collect", headers: {
       "Authorization": "Bearer ${_authService.token}"
     }).timeout(Duration(seconds: 4));
 
