@@ -15,9 +15,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _collectService = CollectService();
 
-  final _players = <String, Event>{};
-  List<Event> _events = [];
-
   @override
   void initState() { 
     super.initState();
@@ -32,18 +29,14 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: StreamBuilder(
         stream: _collectService.stream,
-        builder: (context, AsyncSnapshot<Event> snapshot) {
+        builder: (context, AsyncSnapshot<List<Event>> snapshot) {
           if(snapshot.hasData) {
-            final event = snapshot.data;
-            _players[event.username] = event;
-
-            _events = _players.values.toList();
+            final events = snapshot.data;
 
             return ListView.builder(
-              itemCount: _players.length,
+              itemCount: events.length,
               itemBuilder: (context, i) {
-                final event = _events[i];
-                final disabled = event.collected == null;
+                final event = events[i];
                 return CheckboxListTile(
                   secondary: Icon(
                     Icons.person
@@ -51,13 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: Text(
                     event.username
                   ),
-                  subtitle: disabled ? Text(
-                    ""
-                  ) :
-                  TimerWidget(
-                    date: event.collected,
-                  ),
-                  value: event.collected ?? false,
+                  subtitle: _buildSubtitle(event),
+                  value: event.isCollected,
                   onChanged: (value) => _onChanged(event, value),
                 );
               },
@@ -72,9 +60,30 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _buildSubtitle(Event event) {
+    if(event.isCollected) {
+      return TimerWidget(
+        date: event.collected
+      );
+    }
+
+    String msg = "No information";
+
+    if(event.canCollect) {
+      msg = "Can collect !";
+    }
+
+    return Text(
+      msg,
+      style: TextStyle(
+        color: event.canCollect ? Colors.green : null
+      )
+    );
+  }
+
   void _onChanged(Event event, bool value) {
     if(value) {
-      event.collected = DateTime.now().millisecondsSinceEpoch;
+      event.collected = DateTime.now().millisecondsSinceEpoch.toDouble();
     }
     else {
       event.collected = -1;
@@ -87,17 +96,12 @@ class _HomeScreenState extends State<HomeScreen> {
         "You are disconnected from the server.\n"
         "Press ok to reconnect.",
         onTap: () {
-          Navigator.pop(context);
-          Navigator.pushReplacement(context, MaterialPageRoute(
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
             builder: (context) => LoginScreen()
-          ));
+          ), (route) => route == null);
         }
       );
       return;
     }
-
-    setState(() {
-      _players[event.username] = event;
-    });
   }
 }

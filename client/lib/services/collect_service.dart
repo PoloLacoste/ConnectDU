@@ -10,18 +10,21 @@ class CollectService {
 
   final _authService = locator<AuthService>();
 
-  final _stream = StreamController<Event>();
+  final _stream = StreamController<List<Event>>();
+  final _players = <String, Event>{};
 
-  Stream<Event> get stream => _stream.stream;
+  Stream<List<Event>> get stream => _stream.stream;
   WebSocket _webSocket;
 
   Future<void> collect() async {
-    _webSocket = await WebSocket.connect("ws://192.168.1.14/collect", headers: {
+    _webSocket = await WebSocket.connect("ws://192.168.2.14/collect", headers: {
       "Authorization": "Bearer ${_authService.token}"
     });
 
     _webSocket.listen((data) {
-      _stream.add(Event.fromJson(jsonDecode(data)));
+      final event = Event.fromJson(jsonDecode(data));
+      _players[event.username] = event;
+      _stream.add(_players.values.toList());
     }, onDone: () async {
       await _webSocket.close();
       await _stream.close();
@@ -35,6 +38,8 @@ class CollectService {
   bool send(Event event) {
     try {
       _webSocket.add(jsonEncode(event.toJson()));
+      _players[event.username] = event;
+      _stream.add(_players.values.toList());
     }
     catch(e) {
       return false;
