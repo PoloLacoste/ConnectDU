@@ -8,6 +8,10 @@ class CollectService {
   final ManagedContext context;
   final Map<String, WebSocket> webSockets = {};
 
+  bool exist(String username) {
+    return webSockets.containsKey(username);
+  }
+
   void add(String username, WebSocket webSocket) async {
     if(!webSockets.containsKey(username)) {
       webSockets[username] = webSocket;
