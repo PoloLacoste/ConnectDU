@@ -65,6 +65,7 @@ jobs:
 
   readme:
     name: Push readme to docker hub
+    runs-on: ubuntu-latest
     steps:
       - name: Update repo description
         uses: peter-evans/dockerhub-description@v2
