@@ -114,6 +114,9 @@ class _LoginScreenState extends State<LoginScreen> {
           builder: (context) => HomeScreen()
         ));
       }
+      else {
+        showErrorDialog(context, "Invalid credentials");
+      }
     }
   }
 }

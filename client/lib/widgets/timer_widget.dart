@@ -8,7 +8,7 @@ class TimerWidget extends StatefulWidget {
     @required this.date
   });
 
-  final DateTime date;
+  final int date;
 
   @override
   _TimerState createState() => _TimerState();
@@ -22,7 +22,7 @@ class _TimerState extends State<TimerWidget> {
   @override
   void initState() { 
     super.initState();
-    _date = widget.date;
+    _date = DateTime.fromMillisecondsSinceEpoch(widget.date);
 
     Timer.periodic(_duration, (timer) {
       setState(() {
