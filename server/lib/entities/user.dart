@@ -13,4 +13,7 @@ class _User {
 
   @Column(nullable: true)
   double collected;
+  
+  @Column(defaultValue: 'false')
+  bool connected;
 }
