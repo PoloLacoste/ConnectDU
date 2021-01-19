@@ -8,8 +8,16 @@ class CollectService {
   final ManagedContext context;
   final Map<String, WebSocket> webSockets = {};
 
-  bool exist(String username) {
-    return webSockets.containsKey(username);
+  Future<bool> exist(String username) async {
+    final query = Query<User>(context)
+    ..where((u) => u.username).equalTo(username);
+    final user = await query.fetchOne();
+
+    if(user != null) {
+      return user.connected;
+    }
+
+    return false;
   }
 
   void add(String username, WebSocket webSocket) async {
@@ -24,6 +32,8 @@ class CollectService {
         _onError(username, e);
       });
 
+      await _setConnected(username, true);
+
       final query = Query<User>(context);
       final users = await query.fetch();
 
@@ -37,7 +47,8 @@ class CollectService {
     }
   }
 
-  WebSocket remove(String username) {
+  Future<WebSocket> remove(String username) async {
+    await _setConnected(username, false);
     return webSockets.remove(username);
   }
 
@@ -59,15 +70,23 @@ class CollectService {
     broadcast(event, fromUsername: username);
   }
 
-  void _onDone(String username) {
-    final webSocket = remove(username);
+  void _onDone(String username) async {
+    final webSocket = await remove(username);
     if(webSocket != null) {
-      webSocket.close();
+      await webSocket.close();
     }
   }
 
   void _onError(String username, dynamic e) {
     _onDone(username);
+  }
+
+  Future<void> _setConnected(String username, bool connected) async {
+    final updateQuery = Query<User>(context)
+    ..values.connected = connected
+    ..where((u) => u.username).equalTo(username);
+
+    await updateQuery.updateOne();
   }
 
   void broadcast(Event event, {String fromUsername}) {

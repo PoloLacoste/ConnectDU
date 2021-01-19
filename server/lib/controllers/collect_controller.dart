@@ -10,7 +10,7 @@ class CollectController extends ResourceController
 	Future<Response> collect() async
 	{
     final username = request.authorization.clientID;
-    if(collectService.exist(username)) {
+    if(await collectService.exist(username)) {
       return Response.badRequest(body: "You are already connected !");
     }
 
