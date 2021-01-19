@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import 'package:client/utils/utils.dart';
+
 class AuthService {
   String _token;
 
@@ -12,7 +14,7 @@ class AuthService {
 
     try {
       res = await http.post(
-        "http://192.168.2.14/login",
+        "http://$serverIp/login",
         body: jsonEncode({
           "username": username,
           "password": password

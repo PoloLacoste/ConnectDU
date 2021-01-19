@@ -1,0 +1,1 @@
+const serverIp = "connectdu.remeur.fr";
