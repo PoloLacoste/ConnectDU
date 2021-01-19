@@ -67,8 +67,8 @@ jobs:
     name: Push readme to docker hub
     steps:
       - name: Update repo description
-          uses: peter-evans/dockerhub-description@v2
-          with:
-            username: ${{ secrets.DOCKERHUB_USERNAME }}
-            password: ${{ secrets.DOCKERHUB_PASSWORD }}
-            repository: pololacoste/connectdu
+        uses: peter-evans/dockerhub-description@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          repository: pololacoste/connectdu
