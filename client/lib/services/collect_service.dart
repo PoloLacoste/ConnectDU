@@ -32,7 +32,13 @@ class CollectService {
     });
   }
 
-  void send(Event event) {
-    _webSocket.add(jsonEncode(event.toJson()));
+  bool send(Event event) {
+    try {
+      _webSocket.add(jsonEncode(event.toJson()));
+    }
+    catch(e) {
+      return false;
+    }
+    return true;
   }
 }

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:common/common.dart';
 
 import 'package:client/services/collect_service.dart';
+import 'package:client/screens/login_screen.dart';
 import 'package:client/widgets/timer_widget.dart';
+import 'package:client/utils/dialogs.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -41,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: _players.length,
               itemBuilder: (context, i) {
                 final event = _events[i];
+                final disabled = event.collected == null;
                 return CheckboxListTile(
                   secondary: Icon(
                     Icons.person
@@ -48,10 +51,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: Text(
                     event.username
                   ),
-                  subtitle: TimerWidget(
-                    date: event.date,
+                  subtitle: disabled ? Text(
+                    ""
+                  ) :
+                  TimerWidget(
+                    date: event.collected,
                   ),
-                  value: event.collected,
+                  value: event.collected ?? false,
                   onChanged: (value) => _onChanged(event, value),
                 );
               },
@@ -67,14 +73,28 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onChanged(Event event, bool value) {
-    event.collected = value;
     if(value) {
-      event.collectDate = DateTime.now().millisecondsSinceEpoch;
+      event.collected = DateTime.now().millisecondsSinceEpoch;
     }
     else {
-      event.collectDate = -1;
+      event.collected = -1;
     }
-    _collectService.send(event);
+    
+    final sent = _collectService.send(event);
+
+    if(!sent) {
+      showErrorDialog(context, 
+        "You are disconnected from the server.\n"
+        "Press ok to reconnect.",
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.pushReplacement(context, MaterialPageRoute(
+            builder: (context) => LoginScreen()
+          ));
+        }
+      );
+      return;
+    }
 
     setState(() {
       _players[event.username] = event;

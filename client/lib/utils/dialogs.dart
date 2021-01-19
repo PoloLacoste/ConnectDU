@@ -21,3 +21,38 @@ void showLoadingDialog(BuildContext context, {bool canPop = true, Function willP
 		)
 	);
 }
+
+void showErrorDialog(BuildContext context, String error, {Function onTap}) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(
+          "Error",
+          style: TextStyle(
+            color: Colors.red
+          ),
+        ),
+        content: Text(
+          error,
+          style: TextStyle(
+            color: Colors.red
+          ),
+        ),
+        actions: [
+          Center(
+            child: FlatButton(
+              child: Text("Ok"),
+              onPressed: () {
+                Navigator.pop(context);
+                if(onTap != null) {
+                  onTap();
+                }
+              },
+            ),
+          )
+        ],
+      );
+    }
+  );
+}
