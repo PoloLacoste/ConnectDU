@@ -20,7 +20,7 @@ class AuthService {
         headers: {
           "Content-Type": "application/json"
         }
-      );
+      ).timeout(Duration(seconds: 4));
     }
     catch(e) {
       print(e);
