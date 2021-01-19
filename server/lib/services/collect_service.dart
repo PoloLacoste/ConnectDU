@@ -12,13 +12,6 @@ class CollectService {
     if(!webSockets.containsKey(username)) {
       webSockets[username] = webSocket;
 
-      final query = Query<User>(context);
-      final users = await query.fetch();
-
-      for(final user in users) {
-        webSocket.add(jsonEncode(user.toEvent().toJson()));
-      }
-
       webSocket.listen((data) {
         _onData(webSocket, username, data);
       }, onDone: () {
@@ -26,6 +19,17 @@ class CollectService {
       }, onError: (e) {
         _onError(username, e);
       });
+
+      final query = Query<User>(context);
+      final users = await query.fetch();
+
+      for(final user in users) {
+        final event = Event(
+          username: user.username,
+          collected: user.collected,
+        );
+        webSocket.add(jsonEncode(event.toJson()));
+      }
     }
   }
 
@@ -39,7 +43,6 @@ class CollectService {
 
     final updateQuery = Query<User>(context)
     ..values.collected = event.collected
-    ..values.collectDate = event.collectDate
     ..where((u) => u.username).equalTo(event.username);
 
     final user = await updateQuery.updateOne();

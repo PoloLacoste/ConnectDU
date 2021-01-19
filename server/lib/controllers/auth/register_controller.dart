@@ -20,6 +20,6 @@ class RegisterController extends ResourceController
 
 		await query.insert();
 
-		return Response.ok("");
+		return Response.ok(null);
 	}
 }
