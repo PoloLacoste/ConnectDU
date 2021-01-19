@@ -14,7 +14,7 @@ class AuthService {
 
     try {
       res = await http.post(
-        "http://$serverIp/login",
+        "https://$serverIp/login",
         body: jsonEncode({
           "username": username,
           "password": password
