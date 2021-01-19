@@ -18,7 +18,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() { 
     super.initState();
-    _collectService.collect();
+    _collectService.collect().catchError((e) {
+      print(e);
+      showErrorDialog(context, "Failed to connect to the server");
+    });
   }
 
   @override

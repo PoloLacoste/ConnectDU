@@ -19,7 +19,7 @@ class CollectService {
   Future<void> collect() async {
     _webSocket = await WebSocket.connect("ws://192.168.2.14/collect", headers: {
       "Authorization": "Bearer ${_authService.token}"
-    });
+    }).timeout(Duration(seconds: 4));
 
     _webSocket.listen((data) {
       final event = Event.fromJson(jsonDecode(data));
