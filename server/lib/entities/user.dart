@@ -12,5 +12,5 @@ class _User {
   String password;
 
   @Column(nullable: true)
-  int collected;
+  double collected;
 }
