@@ -6,6 +6,7 @@ on:
 
 jobs:
   test:
+    name: Tests server
     runs-on: ubuntu-latest
 
     # Note that this workflow uses the latest stable version of the Dart SDK.
@@ -35,8 +36,9 @@ jobs:
         run: dart test
 
   build:
+    name: Build docker image and push to docker hub
     runs-on: ubuntu-latest
-    
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
     
