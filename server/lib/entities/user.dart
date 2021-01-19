@@ -11,13 +11,6 @@ class _User {
 
   String password;
 
-  bool collected;
-
-  int collectDate;
-
-  Event toEvent() => Event(
-    username: username,
-    collected: collected,
-    collectDate: collectDate
-  );
+  @Column(nullable: true)
+  int collected;
 }
