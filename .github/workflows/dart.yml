@@ -41,6 +41,8 @@ jobs:
     needs: [tests]
     
     steps:
+      - uses: actions/checkout@v2
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       
@@ -67,6 +69,8 @@ jobs:
     name: Push readme to docker hub
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+
       - name: Update repo description
         uses: peter-evans/dockerhub-description@v2
         with:
