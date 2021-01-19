@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:common/event.dart';
 
 import 'package:client/app/locator.dart';
+import 'package:client/utils/utils.dart';
 
 class CollectService {
 
@@ -17,7 +18,7 @@ class CollectService {
   WebSocket _webSocket;
 
   Future<void> collect() async {
-    _webSocket = await WebSocket.connect("ws://192.168.2.14/collect", headers: {
+    _webSocket = await WebSocket.connect("ws://$serverIp/collect", headers: {
       "Authorization": "Bearer ${_authService.token}"
     }).timeout(Duration(seconds: 4));
 
