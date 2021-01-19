@@ -20,7 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _collectService.collect().catchError((e) {
       print(e);
-      showErrorDialog(context, "Failed to connect to the server");
+      showErrorDialog(context, "Failed to connect to the server," 
+        " you are maybe already connected on this account", onTap: _goToLogin);
     });
   }
 
@@ -98,13 +99,15 @@ class _HomeScreenState extends State<HomeScreen> {
       showErrorDialog(context, 
         "You are disconnected from the server.\n"
         "Press ok to reconnect.",
-        onTap: () {
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-            builder: (context) => LoginScreen()
-          ), (route) => route == null);
-        }
+        onTap: _goToLogin
       );
       return;
     }
+  }
+
+  void _goToLogin(BuildContext context) {
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+      builder: (context) => LoginScreen()
+    ), (route) => route == null);
   }
 }
