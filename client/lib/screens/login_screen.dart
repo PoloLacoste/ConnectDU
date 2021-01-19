@@ -105,17 +105,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
       _settings.username = _username;
 
-      final authenticated = await _authService.login(_username, _password);
+      final authMsg = await _authService.login(_username, _password);
 
       Navigator.pop(context);
 
-      if(authenticated) {
+      if(authMsg == null) {
         Navigator.pushReplacement(context, MaterialPageRoute(
           builder: (context) => HomeScreen()
         ));
       }
       else {
-        showErrorDialog(context, "Invalid credentials");
+        showErrorDialog(context, authMsg);
       }
     }
   }

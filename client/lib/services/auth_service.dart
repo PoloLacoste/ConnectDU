@@ -7,12 +7,12 @@ class AuthService {
 
   String get token => _token;
 
-  Future<bool> login(String username, String password) async {
+  Future<String> login(String username, String password) async {
     http.Response res;
 
     try {
       res = await http.post(
-        "http://192.168.1.14/login",
+        "http://192.168.2.14/login",
         body: jsonEncode({
           "username": username,
           "password": password
@@ -24,14 +24,15 @@ class AuthService {
     }
     catch(e) {
       print(e);
+      return "Failed to etablished a connection with the server";
     }
 
     if(res?.statusCode == 200) {
       final body = jsonDecode(res.body);
       _token = body["token"];
-      return true;
+      return null;
     }
 
-    return false;
+    return "Invalid credentials";
   }
 }
