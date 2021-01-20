@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:common/common.dart';
+import 'package:provider/provider.dart';
 
+import 'package:client/providers/timer_provider.dart';
 import 'package:client/services/collect_service.dart';
 import 'package:client/screens/login_screen.dart';
 import 'package:client/widgets/timer_widget.dart';
@@ -41,16 +43,27 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: events.length,
               itemBuilder: (context, i) {
                 final event = events[i];
-                return CheckboxListTile(
-                  secondary: Icon(
-                    Icons.person
+                return ChangeNotifierProvider.value(
+                  value: TimerProvider(),
+                  child: Consumer<TimerProvider>(
+                    builder: (context, model, child) {
+                      if(model.canCollect != null) {
+                        _onChanged(event, false);
+                      }
+                      return child;
+                    },
+                    child: CheckboxListTile(
+                      secondary: Icon(
+                        Icons.person
+                      ),
+                      title: Text(
+                        event.username
+                      ),
+                      subtitle: _buildSubtitle(event),
+                      value: event.isCollected,
+                      onChanged: (value) => _onChanged(event, value),
+                    ),
                   ),
-                  title: Text(
-                    event.username
-                  ),
-                  subtitle: _buildSubtitle(event),
-                  value: event.isCollected,
-                  onChanged: (value) => _onChanged(event, value),
                 );
               },
             );
@@ -87,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onChanged(Event event, bool value) {
     if(value) {
-      event.collected = DateTime.now().millisecondsSinceEpoch.toDouble();
+      event.collected = DateTime.now().subtract(Duration(hours: 23, minutes: 59, seconds: 50)).millisecondsSinceEpoch.toDouble();
     }
     else {
       event.collected = -1;
