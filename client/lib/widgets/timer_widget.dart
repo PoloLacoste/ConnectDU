@@ -45,7 +45,6 @@ class TimerState extends State<TimerWidget> {
 
   @override
   void dispose() {
-    print("dispose");
     _timer.cancel();
     super.dispose();
   }
@@ -75,7 +74,7 @@ class TimerState extends State<TimerWidget> {
     final minutes = (hourSeconds / 60).floor();
     final seconds = (hourSeconds - minutes * 60).floor();
 
-    if(now.isBefore(collectDate)) {
+    if(now.isBefore(collectDate) && !(hours == 0 && minutes == 0 && seconds == 0)) {
       return "Can collect in ${_formatInt(hours)}:${_formatInt(minutes)}:${_formatInt(seconds)}";
     }
 
