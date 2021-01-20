@@ -30,7 +30,6 @@ class CollectService {
       await _webSocket.close();
       await _stream.close();
     }, onError: (e) async {
-      print(e);
       await _webSocket.close();
       await _stream.close();
     });
