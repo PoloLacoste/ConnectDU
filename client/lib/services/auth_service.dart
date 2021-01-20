@@ -25,7 +25,6 @@ class AuthService {
       ).timeout(Duration(seconds: 4));
     }
     catch(e) {
-      print(e);
       return "Failed to etablished a connection with the server";
     }
 

@@ -21,7 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() { 
     super.initState();
     _collectService.collect().catchError((e) {
-      print(e);
       showErrorDialog(context, "Failed to connect to the server," 
         " you are maybe already connected on this account", onTap: _goToLogin);
     });
@@ -100,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onChanged(Event event, bool value) {
     if(value) {
-      event.collected = DateTime.now().subtract(Duration(hours: 23, minutes: 59, seconds: 50)).millisecondsSinceEpoch.toDouble();
+      event.collected = DateTime.now().millisecondsSinceEpoch.toDouble();
     }
     else {
       event.collected = -1;
