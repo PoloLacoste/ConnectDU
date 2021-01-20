@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:client/providers/timer_provider.dart';
 import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
 
 class TimerWidget extends StatefulWidget {
   
@@ -19,17 +22,24 @@ class TimerState extends State<TimerWidget> {
   final _duration = const Duration(seconds: 1);
   Timer _timer;
   DateTime _date;
+  String _str;
 
   @override
   void initState() { 
     super.initState();
     _date = DateTime.fromMillisecondsSinceEpoch(widget.date.floor());
+    _str = _formatDate(_date);
     _startTimer();
   }
 
   void _startTimer() {
     _timer = Timer.periodic(_duration, (timer) {
-      setState(() {});
+      setState(() {
+        _str = _formatDate(_date);
+        if(_str == null) {
+          context.read<TimerProvider>().canCollect = true;
+        }
+      });
     });
   }
 
@@ -42,10 +52,9 @@ class TimerState extends State<TimerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    String str = _formatDate(_date);
-    bool canCollect = str == null;
+    bool canCollect = _str == null;
     return Text(
-      str ?? "Can collect !",
+      _str ?? "Can collect !",
       style: TextStyle(
         color: canCollect ? Colors.green : null
       ),
