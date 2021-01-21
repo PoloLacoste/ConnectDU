@@ -36,6 +36,10 @@ class AuthService {
       return null;
     }
 
+    if(res?.statusCode != 400) {
+      return "Invalid server address";
+    }
+
     return "Invalid credentials";
   }
 
