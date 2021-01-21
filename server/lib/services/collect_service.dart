@@ -75,6 +75,12 @@ class CollectService {
     if(webSocket != null) {
       await webSocket.close();
     }
+
+    final logoutQuery = Query<User>(context)
+    ..values.connected = false
+    ..where((u) => u.username).equalTo(username);
+
+    await logoutQuery.updateOne();
   }
 
   void _onError(String username, dynamic e) {
