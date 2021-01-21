@@ -4,6 +4,7 @@ import 'package:common/common.dart';
 import 'package:provider/provider.dart';
 
 import 'package:client/providers/timer_provider.dart';
+import 'package:client/app/locator.dart';
 import 'package:client/services/collect_service.dart';
 import 'package:client/screens/login_screen.dart';
 import 'package:client/widgets/timer_widget.dart';
@@ -15,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _authService = locator<AuthService>();
   final _collectService = CollectService();
 
   @override
@@ -31,6 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('ConnectDU'),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.logout
+            ),
+            onPressed: _logout,
+          )
+        ],
       ),
       body: StreamBuilder(
         stream: _collectService.stream,
@@ -117,9 +127,14 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _goToLogin(BuildContext context) {
+  void _goToLogin() {
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
       builder: (context) => LoginScreen()
     ), (route) => route == null);
+  }
+
+  void _logout() {
+    _authService.logout();
+    _goToLogin();
   }
 }

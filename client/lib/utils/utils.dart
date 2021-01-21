@@ -1,1 +1,0 @@
-const serverIp = "192.168.2.14";

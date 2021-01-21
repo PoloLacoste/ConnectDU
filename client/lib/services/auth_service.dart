@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'package:client/utils/utils.dart';
+import 'package:client/app/locator.dart';
 
 class AuthService {
+  final _settings = locator<SettingsService>();
+
   String _token;
 
   String get token => _token;
@@ -14,7 +16,7 @@ class AuthService {
 
     try {
       res = await http.post(
-        "https://$serverIp/login",
+        "https://${_settings.serverIp}/login",
         body: jsonEncode({
           "username": username,
           "password": password
@@ -35,5 +37,9 @@ class AuthService {
     }
 
     return "Invalid credentials";
+  }
+
+  void logout() {
+    _token = null;
   }
 }

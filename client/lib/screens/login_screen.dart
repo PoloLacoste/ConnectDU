@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:client/app/locator.dart';
+import 'package:client/screens/settings_screen.dart';
 import 'package:client/screens/home_screen.dart';
 import 'package:client/utils/dialogs.dart';
 
@@ -33,6 +34,14 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Login"),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.settings
+            ),
+            onPressed: _goToSettings,
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -98,8 +107,21 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  void _goToSettings() {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) => SettingsScreen()
+    ));
+  }
+
   void _login() async {
     if(_formKey.currentState.validate()) {
+
+      if(_settings.serverIp == null) {
+        showErrorDialog(context, "The server ip is not configured !\n"
+          "Press ok to configure it.", onTap: _goToSettings);
+        return;
+      }
+
       showLoadingDialog(context, canPop: false);
       _formKey.currentState.save();
 

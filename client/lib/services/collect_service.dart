@@ -5,11 +5,11 @@ import 'dart:io';
 import 'package:common/event.dart';
 
 import 'package:client/app/locator.dart';
-import 'package:client/utils/utils.dart';
 
 class CollectService {
 
   final _authService = locator<AuthService>();
+  final _settings = locator<SettingsService>();
 
   final _stream = StreamController<List<Event>>();
   final _players = <String, Event>{};
@@ -18,7 +18,7 @@ class CollectService {
   WebSocket _webSocket;
 
   Future<void> collect() async {
-    _webSocket = await WebSocket.connect("wss://$serverIp/collect", headers: {
+    _webSocket = await WebSocket.connect("wss://${_settings.serverIp}/collect", headers: {
       "Authorization": "Bearer ${_authService.token}"
     }).timeout(Duration(seconds: 4));
 
