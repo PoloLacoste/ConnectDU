@@ -35,13 +35,14 @@ class ServerChannel extends ApplicationChannel {
 
   @override
   Controller get entryPoint {
-    final router = Router();
+    final router = Router(notFoundHandler: (request) async {
+      await request.respond(Response.notFound());
+    });
 
     if(config.register) {
       router.route("/register")
       .link(() => RegisterController(context));
     }
-
 
     router.route("/login")
     .link(() => LoginController(context, config.secret));
