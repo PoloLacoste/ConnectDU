@@ -22,9 +22,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() { 
     super.initState();
-    _collectService.collect().catchError((e) {
+    _collectService.collect(context, _logout).catchError((e) {
       showErrorDialog(context, "Failed to connect to the server," 
-        " you are maybe already connected on this account", onTap: _goToLogin);
+        " you are maybe already connected on this account."
+        "Pres ok to reconnect.", onTap: _goToLogin);
     });
   }
 
@@ -135,6 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _logout() {
     _authService.logout();
+    _collectService.logout();
     _goToLogin();
   }
 }

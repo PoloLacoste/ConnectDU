@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:client/utils/dialogs.dart';
 import 'package:common/event.dart';
 
 import 'package:client/app/locator.dart';
+import 'package:flutter/cupertino.dart';
 
 class CollectService {
 
@@ -16,8 +18,9 @@ class CollectService {
 
   Stream<List<Event>> get stream => _stream.stream;
   WebSocket _webSocket;
+  bool _showError = true;
 
-  Future<void> collect() async {
+  Future<void> collect(BuildContext context, Function logout) async {
     _webSocket = await WebSocket.connect("wss://${_settings.serverIp}/collect", headers: {
       "Authorization": "Bearer ${_authService.token}"
     }).timeout(Duration(seconds: 4));
@@ -27,9 +30,21 @@ class CollectService {
       _players[event.username] = event;
       _stream.add(_players.values.toList());
     }, onDone: () async {
+      if(_showError) {
+        showErrorDialog(context, 
+          "You are disconnected from the server.\n"
+          "Press ok to reconnect.",
+          onTap: logout
+        );
+      }
       await _webSocket.close();
       await _stream.close();
     }, onError: (e) async {
+      showErrorDialog(context, 
+        "An error occured :\n $e\n"
+        "Press ok to reconnect.",
+        onTap: logout
+      );
       await _webSocket.close();
       await _stream.close();
     });
@@ -45,5 +60,11 @@ class CollectService {
       return false;
     }
     return true;
+  }
+
+  Future<void> logout() async {
+    _showError = true;
+    await _webSocket.close();
+    _showError = false;
   }
 }
